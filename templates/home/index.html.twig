@@ -3,9 +3,18 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<div class="topbar">
-    <a href="/logout">
-        Logout
-    </a>
-</div>
+    <div class="topbar">
+        <a href="/logout">
+            Logout
+        </a>
+    </div>
+
+    <h1 class="text-3xl font-bold underline">
+        Hello world!
+    </h1>
+
+    <div class="sidebar">
+        <a href="/category">Categories</a>
+        <a href="/expense">Expenses</a>
+    </div>
 {% endblock %}

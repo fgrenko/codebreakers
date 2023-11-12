@@ -1,0 +1,11 @@
+{% form_theme form 'tailwind_2_layout.html.twig' %}
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+<div class="flex items-center justify-normal mb-4">
+    <button class="text-white bg-green-500 hover:bg-green-600 active:bg-green-700 px-3 py-2 rounded-md block transition-all duration-200 ml-1 mr-2">{{ button_label|default('Save') }}</button>
+    <a href="{{ path('app_category_index') }}" class="text-white bg-gray-500 hover:bg-gray-600 active:bg-gray-700 px-3 py-2 rounded-md block transition-all duration-200">Back to list</a>
+</div>
+
+{{ form_end(form) }}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category Index{% endblock %}
+
+{% block body %}
+    <div class="bg-gray-100 p-6">
+        <div class="flex items-center mb-4"> <!-- Reduced margin-bottom from mb-6 to mb-4 -->
+            <h1 class="text-2xl font-bold mr-3">Categories</h1>
+            <a href="{{ path('app_category_new') }}" class="text-white bg-green-500 hover:bg-green-600 active:bg-green-700 px-3 py-2 rounded-md block transition-all duration-200">Create new</a>
+        </div>
+
+        <div class="mt-4">
+            <h4 class="text-lg font-semibold">Available Money:</h4>
+            <p class="text-gray-700">{{ app.user.money }}</p>
+        </div>
+
+        <table class="min-w-full border border-gray-300 mt-4">
+            <thead>
+            <tr>
+                <th class="py-2 px-4 border-b border-r text-center">Id</th>
+                <th class="py-2 px-4 border-b border-r text-center">Name</th>
+                <th class="py-2 px-4 border-b text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr class="transition-all duration-200 hover:bg-blue-100"
+                    onclick="window.location='{{ path('app_category_show', {'id': category.id}) }}';"
+                    style="cursor: pointer;">
+                    <td class="py-2 px-4 border-b border-r text-center">{{ category.id }}</td>
+                    <td class="py-2 px-4 border-b border-r text-center">{{ category.name }}</td>
+                    <td class="py-2 px-4 border-b text-center flex items-center justify-center">
+                        <a href="{{ path('app_category_edit', {'id': category.id}) }}"
+                           class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white px-3 py-2 rounded-md mr-1 block transition-all duration-200">Edit</a>
+                        <a href="{{ path('app_category_delete', {'id': category.id}) }}"
+                           class="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-3 py-2 rounded-md block transition-all duration-200">Delete</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="py-2 px-4 border-b text-center">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
