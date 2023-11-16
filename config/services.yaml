@@ -36,3 +36,4 @@ services:
             - { name: doctrine.event_listener, event: 'loadClassMetadata' }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+

@@ -4,20 +4,27 @@
     <h2 class="text-2xl font-bold mb-4">Home Budget App</h2>
     <ul class="text-center">
         <li>
-            <a href="{{ path('home') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Home</a>
+            <a href="{{ path('home') }}"
+               class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Home</a>
         </li>
         <li>
-            <a href="{{ path('app_expense_index') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Expenses</a>
+            <a href="{{ path('app_expense_index') }}"
+               class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Expenses</a>
         </li>
         <li>
-            <a href="{{ path('app_category_index') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Categories</a>
+            <a href="{{ path('app_category_index') }}"
+               class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Categories</a>
         </li>
         <li>
-            <a href="/api" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Api Platform</a>
+            <a href="/api"
+               class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Api
+                Platform</a>
         </li>
         <!-- Add logout link -->
         <li class="mt-4">
-            <a href="{{ path('app_logout') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Logout</a>
+            <h4 class="m-2">{{ app.user.email }}</h4>
+            <a href="{{ path('app_logout') }}"
+               class="text-red-500 block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 bg-gray-300 rounded-md">Logout</a>
         </li>
     </ul>
 </div>

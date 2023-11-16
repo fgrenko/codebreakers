@@ -6,6 +6,8 @@ use App\Entity\Expense;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * @extends ServiceEntityRepository<Expense>
@@ -17,6 +19,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ExpenseRepository extends ServiceEntityRepository
 {
+    #[Required]
+    public Security $security;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Expense::class);
@@ -25,6 +30,9 @@ class ExpenseRepository extends ServiceEntityRepository
     public function findByFilter($filter)
     {
         $queryBuilder = $this->createQueryBuilder('e');
+
+        $queryBuilder->andWhere('e.createdBy = :user')
+            ->setParameter('user', $this->security->getUser()->getId());
 
         if (isset($filter['category'])) {
             $queryBuilder

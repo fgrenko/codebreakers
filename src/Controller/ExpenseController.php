@@ -26,12 +26,19 @@ class ExpenseController extends AbstractController
         'Amount' => 'amount',
         'Description' => 'description',
     ];
+
+    public const ROUTE_DELETE = 'app_expense_delete';
+    public const ROUTE_EDIT = 'app_expense_edit';
+    public const ROUTE_INDEX = 'app_expense_index';
+    public const ROUTE_NEW = 'app_expense_new';
+    public const ROUTE_SHOW = 'app_expense_show';
+
     #[Required]
     public Security $security;
     #[Required]
     public MoneyDeductionService $moneyDeductionService;
 
-    #[Route('/', name: 'app_expense_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: self::ROUTE_INDEX, methods: ['GET', 'POST'])]
     public function index(Request $request, ExpenseRepository $expenseRepository): Response
     {
 
@@ -53,10 +60,11 @@ class ExpenseController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_expense_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: self::ROUTE_NEW, methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $expense = new Expense();
+        $this->denyAccessUnlessGranted(self::ROUTE_NEW, $expense);
         $form = $this->createForm(ExpenseType::class, $expense);
         $form->handleRequest($request);
 
@@ -81,17 +89,19 @@ class ExpenseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_expense_show', methods: ['GET'])]
+    #[Route('/{id}', name: self::ROUTE_SHOW, methods: ['GET'])]
     public function show(Expense $expense): Response
     {
+        $this->denyAccessUnlessGranted(self::ROUTE_SHOW, $expense);
         return $this->render('expense/show.html.twig', [
             'expense' => $expense,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_expense_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: self::ROUTE_EDIT, methods: ['GET', 'POST'])]
     public function edit(Request $request, Expense $expense, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted(self::ROUTE_EDIT, $expense);
         $form = $this->createForm(ExpenseType::class, $expense);
         $form->handleRequest($request);
 
@@ -107,9 +117,10 @@ class ExpenseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_expense_delete', methods: ['DELETE'])]
+    #[Route('/{id}', name: self::ROUTE_DELETE, methods: ['DELETE'])]
     public function delete(Request $request, Expense $expense, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted(self::ROUTE_DELETE, $expense);
         if ($this->isCsrfTokenValid('delete' . $expense->getId(), $request->request->get('_token'))) {
             $entityManager->remove($expense);
             $entityManager->flush();
