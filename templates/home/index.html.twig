@@ -3,18 +3,12 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <div class="topbar">
-        <a href="/logout">
-            Logout
-        </a>
+    <div class="mt-4">
+        <h4 class="text-lg font-semibold">Available Money:</h4>
+        <p class="text-gray-700">{{ app.user.money }}</p>
     </div>
 
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
+    <a href="{{ path('app_add_money') }}">Add funds</a>
 
-    <div class="sidebar">
-        <a href="/category">Categories</a>
-        <a href="/expense">Expenses</a>
-    </div>
+    {{ dump(aggregatedData) }}
 {% endblock %}

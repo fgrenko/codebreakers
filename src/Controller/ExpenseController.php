@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Expense;
+use App\Form\ExpenseFilterType;
 use App\Form\ExpenseType;
 use App\Repository\ExpenseRepository;
 use App\Service\MoneyDeductionService;
@@ -22,12 +23,22 @@ class ExpenseController extends AbstractController
     #[Required]
     public MoneyDeductionService $moneyDeductionService;
 
-    #[Route('/', name: 'app_expense_index', methods: ['GET'])]
-    public function index(ExpenseRepository $expenseRepository): Response
+    #[Route('/', name: 'app_expense_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, ExpenseRepository $expenseRepository): Response
     {
 
+        $form = $this->createForm(ExpenseFilterType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $expenses = $expenseRepository->findByFilter($form->getData());
+        } else {
+            $expenses = $expenseRepository->findAll();
+        }
+
         return $this->render('expense/index.html.twig', [
-            'expenses' => $expenseRepository->findAll(),
+            'expenses' => $expenses,
+            'form' => $form,
         ]);
     }
 

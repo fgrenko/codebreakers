@@ -45,4 +45,67 @@ class CategoryRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function getCategoriesRankedBySpendings(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.name', 'SUM(e.amount) as totalSpendings')
+            ->leftJoin('c.expenses', 'e')
+            ->groupBy('c.id')
+            ->orderBy('totalSpendings', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getCategoriesRankedBySpendingsInYear(\DateTime $date): array
+    {
+        $firstDayOfMonth = $date->format('Y-01-01');
+        $lastDayOfMonth = $date->format('Y-12-t');
+
+        return $this->createQueryBuilder('c')
+            ->select('c', 'SUM(e.amount) as totalSpendings')
+            ->leftJoin('c.expenses', 'e')
+            ->where('e.createdAt BETWEEN :firstDayOfMonth AND :lastDayOfMonth')
+            ->setParameter('firstDayOfMonth', $firstDayOfMonth)
+            ->setParameter('lastDayOfMonth', $lastDayOfMonth)
+            ->groupBy('c.id')
+            ->orderBy('totalSpendings', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function getCategoriesRankedBySpendingsInMonth(\DateTime $date): array
+    {
+        $firstDayOfMonth = $date->format('Y-m-01');
+        $lastDayOfMonth = $date->format('Y-m-t');
+
+        return $this->createQueryBuilder('c')
+            ->select('c', 'SUM(e.amount) as totalSpendings')
+            ->leftJoin('c.expenses', 'e')
+            ->where('e.createdAt BETWEEN :firstDayOfMonth AND :lastDayOfMonth')
+            ->setParameter('firstDayOfMonth', $firstDayOfMonth)
+            ->setParameter('lastDayOfMonth', $lastDayOfMonth)
+            ->groupBy('c.id')
+            ->orderBy('totalSpendings', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getCategoriesRankedBySpendingsInDay(\DateTime $date): array
+    {
+        $startOfDay = $date->format('Y-m-d 00:00:00');
+        $endOfDay = $date->format('Y-m-d 23:59:59');
+
+        return $this->createQueryBuilder('c')
+            ->select('c', 'SUM(e.amount) as totalSpendings')
+            ->leftJoin('c.expenses', 'e')
+            ->where('e.createdAt BETWEEN :startOfDay AND :endOfDay')
+            ->setParameter('startOfDay', $startOfDay)
+            ->setParameter('endOfDay', $endOfDay)
+            ->groupBy('c.id')
+            ->orderBy('totalSpendings', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

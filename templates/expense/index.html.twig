@@ -1,18 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Expenses{% endblock %}
+{% block head %}
+    <script>
+        import nouislider from 'nouislider'
+    </script>
+{% endblock %}
 
 {% block body %}
     <div class="bg-gray-100 p-6">
 
         <div class="flex items-center mb-4"> <!-- Reduced margin-bottom from mb-6 to mb-4 -->
             <h1 class="text-2xl font-bold mr-3">Expenses</h1>
-            <a href="{{ path('app_expense_new') }}" class="text-white bg-green-500 hover:bg-green-600 active:bg-green-700 px-3 py-2 rounded-md block transition-all duration-200">Create new</a>
+            <a href="{{ path('app_expense_new') }}"
+               class="text-white bg-green-500 hover:bg-green-600 active:bg-green-700 px-3 py-2 rounded-md block transition-all duration-200">Create
+                new</a>
         </div>
 
         <div class="mt-4">
             <h4 class="text-lg font-semibold">Available Money:</h4>
             <p class="text-gray-700">{{ app.user.money }}</p>
+        </div>
+
+        <div class="mt-4">
+            {{ include('expense/_fitler_form.html.twig', {'filter': true}) }}
         </div>
 
 
@@ -22,6 +33,7 @@
                 <tr>
                     <th class="py-2 px-4 border-b border-r text-center">Description</th>
                     <th class="py-2 px-4 border-b border-r text-center">Amount</th>
+                    <th class="py-2 px-4 border-b border-r text-center">Created at</th>
                     <th class="py-2 px-4 border-b text-center">Actions</th>
                 </tr>
                 </thead>
@@ -33,9 +45,12 @@
                         style="cursor: pointer;">
                         <td class="py-2 px-4 border-b border-r text-center">{{ expense.description }}</td>
                         <td class="py-2 px-4 border-b border-r text-center">${{ expense.amount }}</td>
+                        <td class="py-2 px-4 border-b border-r text-center">{{ expense.createdAt|date }}</td>
                         <td class="py-2 px-4 border-b text-center flex items-center justify-center">
-                            <a href="{{ path('app_expense_edit', {'id': expense.id}) }}" class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white px-3 py-2 rounded-md mr-1 block transition-all duration-200">Edit</a>
-                            <a href="{{ path('app_expense_delete', {'id': expense.id}) }}" class="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-3 py-2 rounded-md block transition-all duration-200">Delete</a>
+                            <a href="{{ path('app_expense_edit', {'id': expense.id}) }}"
+                               class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white px-3 py-2 rounded-md mr-1 block transition-all duration-200">Edit</a>
+                            <a href="{{ path('app_expense_delete', {'id': expense.id}) }}"
+                               class="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-3 py-2 rounded-md block transition-all duration-200">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}

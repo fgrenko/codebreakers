@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Expense;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -45,4 +46,62 @@ class ExpenseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findByFilter($filter): array
+    {
+        $queryBuilder = $this->createQueryBuilder('e');
+
+        if (isset($filter['category'])) {
+            $queryBuilder
+                ->andWhere('e.category = :category')
+                ->setParameter('category', $filter['category']);
+        }
+        if (isset($filter['priceMin'])) {
+            $queryBuilder
+                ->andWhere('e.amount >= :priceMin')
+                ->setParameter('priceMin', $filter['priceMin']);
+        }
+        if (isset($filter['priceMax'])) {
+            $queryBuilder
+                ->andWhere('e.amount <= :priceMax')
+                ->setParameter('priceMax', $filter['priceMax']);
+        }
+        if (isset($filter['date'])) {
+            $from = new \DateTime($filter['date']->format("Y-m-d") . " 00:00:00");
+            $to = new \DateTime($filter['date']->format("Y-m-d") . " 23:59:59");
+
+            // Compare only the date part
+            $queryBuilder
+                ->andWhere('e.createdAt BETWEEN :from AND :to')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to);
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findExpensesByDate(DateTime $date)
+    {
+        $from = new \DateTime($date->format("Y-m-d") . " 00:00:00");
+        $to = new \DateTime($date->format("Y-m-d") . " 23:59:59");
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.createdAt BETWEEN :from AND :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findExpensesBetweenDates(DateTime $dateFrom, Datetime $dateTo)
+    {
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.createdAt BETWEEN :from AND :to')
+            ->setParameter('from', $dateFrom)
+            ->setParameter('to', $dateTo)
+            ->getQuery()
+            ->getResult();
+    }
 }

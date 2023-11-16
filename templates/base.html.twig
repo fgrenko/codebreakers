@@ -7,7 +7,6 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-    <link rel="stylesheet" href="assets/styles/app.css">
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
@@ -17,17 +16,17 @@
     {% endblock %}
 </head>
 <body>
-    <div class="flex">
-        {% if noSideBar is not defined %}
-            <div class="h-screen w-1/8 bg-gray-800 text-white">
-                {{ include('sidebar.html.twig') }}
-            </div>
-        {% endif %}
-
-        <div class="flex-grow"> <!-- flex-grow will make this div take up the remaining space -->
-            {% block body %}{% endblock %}
+<div class="flex">
+    {% if noSideBar is not defined %}
+        <div class="h-screen w-1/8 bg-gray-800 text-white">
+            {{ include('sidebar.html.twig') }}
         </div>
+    {% endif %}
+
+    <div class="flex-grow"> <!-- flex-grow will make this div take up the remaining space -->
+        {% block body %}{% endblock %}
     </div>
+</div>
 
 </body>
 </html>
