@@ -63,7 +63,7 @@ class CategoryRepository extends ServiceEntityRepository
         $lastDayOfMonth = $date->format('Y-12-t');
 
         return $this->createQueryBuilder('c')
-            ->select('c', 'SUM(e.amount) as totalSpendings')
+            ->select('c.name', 'SUM(e.amount) as totalSpendings')
             ->leftJoin('c.expenses', 'e')
             ->where('e.createdAt BETWEEN :firstDayOfMonth AND :lastDayOfMonth')
             ->setParameter('firstDayOfMonth', $firstDayOfMonth)
@@ -81,7 +81,7 @@ class CategoryRepository extends ServiceEntityRepository
         $lastDayOfMonth = $date->format('Y-m-t');
 
         return $this->createQueryBuilder('c')
-            ->select('c', 'SUM(e.amount) as totalSpendings')
+            ->select('c.name', 'SUM(e.amount) as totalSpendings')
             ->leftJoin('c.expenses', 'e')
             ->where('e.createdAt BETWEEN :firstDayOfMonth AND :lastDayOfMonth')
             ->setParameter('firstDayOfMonth', $firstDayOfMonth)
@@ -98,7 +98,7 @@ class CategoryRepository extends ServiceEntityRepository
         $endOfDay = $date->format('Y-m-d 23:59:59');
 
         return $this->createQueryBuilder('c')
-            ->select('c', 'SUM(e.amount) as totalSpendings')
+            ->select('c.name', 'SUM(e.amount) as totalSpendings')
             ->leftJoin('c.expenses', 'e')
             ->where('e.createdAt BETWEEN :startOfDay AND :endOfDay')
             ->setParameter('startOfDay', $startOfDay)

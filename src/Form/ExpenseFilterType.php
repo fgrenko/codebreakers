@@ -2,18 +2,17 @@
 
 namespace App\Form;
 
+use App\Controller\ExpenseController;
 use App\Entity\Category;
-use App\Entity\Entity;
 use App\Entity\Expense;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class ExpenseFilterType extends AbstractType
 {
@@ -31,10 +30,18 @@ class ExpenseFilterType extends AbstractType
             ->add('priceMax', NumberType::class, [
                 'required' => false,
             ])
-            ->add('date', DateType::class, [
+            ->add('createdAt', DateType::class, [
                 'required' => false,
-                'html5' => true,
-                'attr' => ['class' => 'js-datepicker'],
+            ])
+            ->add('sortItem', ChoiceType::class, [
+                'choices' => array_map(null, ExpenseController::EXPENSE_SORT_FIELDS),
+            ])
+            ->add('sortType', ChoiceType::class, [
+                'choices' => [
+                    'DESC' => 'DESC',
+                    'ASC' => 'ASC',
+
+                ],
             ]);
     }
 

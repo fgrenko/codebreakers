@@ -1,23 +1,20 @@
 <!-- sidebar.html.twig -->
 
-<div class="p-4">
+<div class="fixed top-0 left-0 h-full p-4 bg-gray-900 text-white">
     <h2 class="text-2xl font-bold mb-4">Home Budget App</h2>
     <ul class="text-center">
         <li>
-            <a href="{{ path('home') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105">Home</a>
+            <a href="{{ path('home') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Home</a>
         </li>
         <li>
-            <a href="{{ path('app_expense_index') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105">Expenses</a>
+            <a href="{{ path('app_expense_index') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Expenses</a>
         </li>
         <li>
-            <a href="{{ path('app_category_index') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105">Categories</a>
-        </li>
-        <li>
-            <a href="/api" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105">API</a>
+            <a href="{{ path('app_category_index') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Categories</a>
         </li>
         <!-- Add logout link -->
         <li class="mt-4">
-            <a href="{{ path('app_logout') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105">Logout</a>
+            <a href="{{ path('app_logout') }}" class="block py-2 transition duration-300 transform hover:bg-gray-700 hover:text-blue-300 hover:scale-105 rounded-md">Logout</a>
         </li>
     </ul>
 </div>

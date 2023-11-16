@@ -66,15 +66,18 @@ class ExpenseRepository extends ServiceEntityRepository
                 ->andWhere('e.amount <= :priceMax')
                 ->setParameter('priceMax', $filter['priceMax']);
         }
-        if (isset($filter['date'])) {
-            $from = new \DateTime($filter['date']->format("Y-m-d") . " 00:00:00");
-            $to = new \DateTime($filter['date']->format("Y-m-d") . " 23:59:59");
+        if (isset($filter['createdAt'])) {
+            $from = new \DateTime($filter['createdAt']->format("Y-m-d") . " 00:00:00");
+            $to = new \DateTime($filter['createdAt']->format("Y-m-d") . " 23:59:59");
 
             // Compare only the date part
             $queryBuilder
                 ->andWhere('e.createdAt BETWEEN :from AND :to')
                 ->setParameter('from', $from)
                 ->setParameter('to', $to);
+        }
+        if (isset($filter['sortItem'])) {
+            $queryBuilder->orderBy('e.' . $filter['sortItem'], $filter['sortType']);
         }
 
         return $queryBuilder->getQuery()->getResult();

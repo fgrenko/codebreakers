@@ -18,19 +18,34 @@
             {{ form_label(form.priceMin) }}
         </div>
         <div class="mr-2">
-            {{ form_widget(form.priceMin) }}
+            {{ form_widget(form.priceMin, {'attr': {'class': 'w-32'}}) }}
         </div>
         <div class="mr-2 font-bold">
             {{ form_label(form.priceMax) }}
         </div>
         <div class="mr-2">
-            {{ form_widget(form.priceMax) }}
+            {{ form_widget(form.priceMax, {'attr': {'class': 'w-32'}}) }}
         </div>
         <div class="mr-2 font-bold">
-            {{ form_label(form.date) }}
+            {{ form_label(form.createdAt) }}
         </div>
         <div>
-            {{ form_widget(form.date) }}
+            {{ form_widget(form.createdAt) }}
+        </div>
+    </div>
+
+    <div class="flex items-center mb-4">
+        <div class="mr-2 font-bold">
+            {{ form_label(form.sortItem) }}
+        </div>
+        <div>
+            {{ form_widget(form.sortItem) }}
+        </div>
+        <div class="ml-2 mr-2 font-bold">
+            {{ form_label(form.sortType) }}
+        </div>
+        <div>
+            {{ form_widget(form.sortType) }}
         </div>
     </div>
 

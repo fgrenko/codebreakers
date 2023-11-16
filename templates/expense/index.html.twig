@@ -19,7 +19,7 @@
 
         <div class="mt-4">
             <h4 class="text-lg font-semibold">Available Money:</h4>
-            <p class="text-gray-700">{{ app.user.money }}</p>
+            <p class="text-gray-700">{{ app.user.money }}€</p>
         </div>
 
         <div class="mt-4">
@@ -33,6 +33,7 @@
                 <tr>
                     <th class="py-2 px-4 border-b border-r text-center">Description</th>
                     <th class="py-2 px-4 border-b border-r text-center">Amount</th>
+                    <th class="py-2 px-4 border-b border-r text-center">Category</th>
                     <th class="py-2 px-4 border-b border-r text-center">Created at</th>
                     <th class="py-2 px-4 border-b text-center">Actions</th>
                 </tr>
@@ -44,7 +45,8 @@
                         onclick="window.location='{{ path('app_expense_show', {'id': expense.id}) }}';"
                         style="cursor: pointer;">
                         <td class="py-2 px-4 border-b border-r text-center">{{ expense.description }}</td>
-                        <td class="py-2 px-4 border-b border-r text-center">${{ expense.amount }}</td>
+                        <td class="py-2 px-4 border-b border-r text-center">{{ expense.amount }}€</td>
+                        <td class="py-2 px-4 border-b border-r text-center">{{ expense.category.name }}</td>
                         <td class="py-2 px-4 border-b border-r text-center">{{ expense.createdAt|date }}</td>
                         <td class="py-2 px-4 border-b text-center flex items-center justify-center">
                             <a href="{{ path('app_expense_edit', {'id': expense.id}) }}"

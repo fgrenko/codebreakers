@@ -2,13 +2,71 @@
 
 {% block title %}Hello HomeController!{% endblock %}
 
+
 {% block body %}
-    <div class="mt-4">
-        <h4 class="text-lg font-semibold">Available Money:</h4>
-        <p class="text-gray-700">{{ app.user.money }}</p>
+    <div class="container mx-auto my-8 text-center">
+        <h4 class="text-2xl font-semibold">Available Money: {{ app.user.money }} €</h4>
+        <a href="{{ path('app_add_money') }}" class="text-white bg-green-500 hover:bg-green-600 active:bg-green-700 px-3 py-2 rounded-md inline-block transition-all duration-200">Add funds</a>
     </div>
 
-    <a href="{{ path('app_add_money') }}">Add funds</a>
 
-    {{ dump(aggregatedData) }}
+    <div class="container mx-auto mt-8 p-4">
+        <h2 class="text-3xl font-bold mb-4">Expense Overview</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-gray-100 p-4 rounded-md">
+                <h3 class="text-xl font-semibold mb-2">Spent Today</h3>
+                <p class="text-gray-700">{{ aggregatedData.spentToday }} €</p>
+            </div>
+
+            <div class="bg-gray-100 p-4 rounded-md">
+                <h3 class="text-xl font-semibold mb-2">Spent This Month</h3>
+                <p class="text-gray-700">{{ aggregatedData.spentMonth }} €</p>
+            </div>
+
+            <div class="bg-gray-100 p-4 rounded-md">
+                <h3 class="text-xl font-semibold mb-2">Spent This Year</h3>
+                <p class="text-gray-700">{{ aggregatedData.spentYear }} €</p>
+            </div>
+
+            <div class="bg-gray-100 p-4 rounded-md">
+                <h3 class="text-xl font-semibold mb-2">Spent All Time</h3>
+                <p class="text-gray-700">{{ aggregatedData.spentAllTime }} €</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto mt-8 p-4">
+        <h2 class="text-3xl font-bold mb-4">Top 5 Category Spendings</h2>
+
+        <div>
+            <h3 class="text-xl font-semibold mb-2">Top Categories Today</h3>
+            <div class="bg-gray-100 p-4 rounded-md">
+                <ol class="list-decimal pl-4">
+                    {% for category in aggregatedData.categorySpendingsDay|slice(0, 5) %}
+                        <li class="mb-2">{{ category.name }} - {{ category.totalSpendings }} €</li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-4 mb-2">Top Categories This Month</h3>
+            <div class="bg-gray-100 p-4 rounded-md">
+                <ol class="list-decimal pl-4">
+                    {% for category in aggregatedData.categorySpendingsMonth|slice(0, 5) %}
+                        <li class="mb-2">{{ category.name }} - {{ category.totalSpendings }} €</li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-4 mb-2">Top Categories This Year</h3>
+            <div class="bg-gray-100 p-4 rounded-md">
+                <ol class="list-decimal pl-4">
+                    {% for category in aggregatedData.categorySpendingsYear|slice(0, 5) %}
+                        <li class="mb-2">{{ category.name }} - {{ category.totalSpendings }} €</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

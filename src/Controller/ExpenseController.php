@@ -18,6 +18,12 @@ use Symfony\Contracts\Service\Attribute\Required;
 #[Route('/expense')]
 class ExpenseController extends AbstractController
 {
+    public const EXPENSE_SORT_FIELDS = [
+        'Created At' => 'createdAt',
+        'Category' => 'category',
+        'Amount' => 'amount',
+        'Description' => 'description',
+    ];
     #[Required]
     public Security $security;
     #[Required]
