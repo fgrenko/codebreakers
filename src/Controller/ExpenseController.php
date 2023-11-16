@@ -8,6 +8,8 @@ use App\Form\ExpenseType;
 use App\Repository\ExpenseRepository;
 use App\Service\MoneyDeductionService;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,11 +41,14 @@ class ExpenseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $expenses = $expenseRepository->findByFilter($form->getData());
         } else {
-            $expenses = $expenseRepository->findAll();
+            $expenses = $expenseRepository->findByFilter(null);
         }
 
+        $adapter = new QueryAdapter($expenses);
+        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $request->query->get('page', 1), 10);
+
         return $this->render('expense/index.html.twig', [
-            'expenses' => $expenses,
+            'expenses' => $pagerfanta,
             'form' => $form,
         ]);
     }
